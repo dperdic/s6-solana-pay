@@ -3,31 +3,43 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  @apply antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply m-0 h-full bg-gray-100 flex flex-col;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.btn {
+  @apply items-center border border-transparent font-medium whitespace-nowrap focus:outline-none disabled:opacity-85;
+}
+
+.btn-sm {
+  @apply p-3 text-sm rounded-md;
+}
+
+.btn-md {
+  @apply px-4 py-2.5 text-base rounded-lg;
+}
+
+.btn-blue {
+  @apply border border-transparent shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-white {
+  @apply border border-gray-300 shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
