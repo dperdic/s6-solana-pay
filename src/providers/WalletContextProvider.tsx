@@ -1,4 +1,3 @@
-"use client";
 import { FC, ReactNode, useMemo } from "react";
 import {
   ConnectionProvider,
@@ -11,7 +10,6 @@ import "./WalletContextProvider.css";
 
 const getEndpoint = (): string => {
   const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
-  console.log(rpcUrl);
 
   if (!rpcUrl || rpcUrl === "") {
     return clusterApiUrl(process.env.NEXT_PUBLIC_SOL_CLUSTER as Cluster);

@@ -1,4 +1,5 @@
 "use client";
+
 import WalletContextProvider from "@/providers/WalletContextProvider";
 import { ReactNode } from "react";
 
