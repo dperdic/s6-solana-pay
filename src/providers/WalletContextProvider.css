@@ -5,9 +5,9 @@
 }
 
 .wallet-adapter-button-trigger {
-  @apply bg-blue-600;
+  @apply bg-black;
 }
 
 .wallet-adapter-button:not([disabled]):hover {
-  @apply bg-blue-700;
+  @apply bg-gray-800;
 }

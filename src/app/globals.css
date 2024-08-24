@@ -23,12 +23,12 @@ body {
   @apply px-4 py-2.5 text-base rounded-lg;
 }
 
-.btn-blue {
-  @apply border border-transparent shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500;
+.btn-black {
+  @apply border border-transparent shadow-sm text-white bg-black hover:bg-gray-800 focus:ring-gray-500;
 }
 
 .btn-white {
-  @apply border border-gray-300 shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:ring-blue-500;
+  @apply border border-gray-300 shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:ring-gray-500;
 }
 
 /* Chrome, Safari, Edge, Opera */
