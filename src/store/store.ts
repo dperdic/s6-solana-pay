@@ -67,7 +67,7 @@ export const useInventoryStore = create<InventoryStore>((set, get) => ({
           return { ...x, quantity: x.quantity - 1 };
         }
 
-        return product;
+        return x;
       });
 
       set(() => ({
@@ -94,7 +94,7 @@ export const useInventoryStore = create<InventoryStore>((set, get) => ({
   },
 }));
 
-export const useAppStore = create<CartStore>((set, get) => ({
+export const useCartStore = create<CartStore>((set, get) => ({
   cart: INITIAL_STATE.cart,
   totalPrice: INITIAL_STATE.totalPrice,
 
