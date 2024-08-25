@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type Item = {
+export type Product = {
   id: number;
   name: string;
   price: number;
@@ -8,46 +8,46 @@ export type Item = {
 };
 
 const INITIAL_STATE = {
-  inventory: <Item[]>[
+  inventory: <Product[]>[
     {
       id: 1,
-      name: "item 1",
+      name: "product 1",
       price: 1,
       quantity: 10,
     },
     {
       id: 2,
-      name: "item 2",
+      name: "product 2",
       price: 1.5,
       quantity: 15,
     },
     {
       id: 3,
-      name: "item 3",
+      name: "product 3",
       price: 2,
       quantity: 7,
     },
   ],
-  cart: <Item[]>[],
+  cart: <Product[]>[],
   totalPrice: 0,
 };
 
-export interface InventoryStore {
-  inventory: Item[];
+interface InventoryStore {
+  inventory: Product[];
 
-  returnToInventory: (item: Item) => void;
-  getFromInventory: (item: Item) => void;
+  returnToInventory: (product: Product) => void;
+  getFromInventory: (product: Product) => void;
 }
 
-export interface CartStore {
-  cart: Item[];
+interface CartStore {
+  cart: Product[];
   totalPrice: number;
 
-  addToCart: (item: Item) => void;
-  removeFromCart: (item: Item) => void;
+  addToCart: (product: Product) => void;
+  removeFromCart: (product: Product) => void;
 }
 
-export interface TransactionState {
+interface TransactionState {
   transactionInProgress: boolean;
 
   setTransactionInProgress: (inProgress: boolean) => void;
@@ -57,17 +57,17 @@ export interface TransactionState {
 export const useInventoryStore = create<InventoryStore>((set, get) => ({
   inventory: INITIAL_STATE.inventory,
 
-  getFromInventory: (item: Item) => {
+  getFromInventory: (product: Product) => {
     const inventory = get().inventory;
-    const inventoryProduct = inventory.find((x) => x.id === item.id)!;
+    const inventoryProduct = inventory.find((x) => x.id === product.id)!;
 
     if (inventoryProduct.quantity > 0) {
       const updatedInventory = inventory.map((x) => {
-        if (x.id === item.id) {
+        if (x.id === product.id) {
           return { ...x, quantity: x.quantity - 1 };
         }
 
-        return item;
+        return product;
       });
 
       set(() => ({
@@ -77,11 +77,11 @@ export const useInventoryStore = create<InventoryStore>((set, get) => ({
 
     return;
   },
-  returnToInventory: (item: Item) => {
+  returnToInventory: (product: Product) => {
     const inventory = get().inventory;
 
     const updatedInventory = inventory.map((x) => {
-      if (x.id === item.id) {
+      if (x.id === product.id) {
         return { ...x, quantity: x.quantity + 1 };
       }
 
@@ -98,23 +98,23 @@ export const useAppStore = create<CartStore>((set, get) => ({
   cart: INITIAL_STATE.cart,
   totalPrice: INITIAL_STATE.totalPrice,
 
-  addToCart: (item: Item) => {
+  addToCart: (product: Product) => {
     const inventoryStore = useInventoryStore.getState();
     const inventory = inventoryStore.inventory;
-    const inventoryItem = inventory.find((x) => x.id === item.id)!;
+    const inventoryItem = inventory.find((x) => x.id === product.id)!;
 
     if (inventoryItem.quantity <= 0) {
       return;
     }
 
     const cart = get().cart;
-    const cartItem = cart.find((x) => x.id === item.id);
+    const cartItem = cart.find((x) => x.id === product.id);
 
-    let updatedCart: Item[] = [];
+    let updatedCart: Product[] = [];
 
     if (cartItem) {
       updatedCart = cart.map((x) => {
-        if (x.id === item.id) {
+        if (x.id === product.id) {
           return { ...x, quantity: x.quantity + 1 };
         }
 
@@ -122,9 +122,9 @@ export const useAppStore = create<CartStore>((set, get) => ({
       });
     } else {
       updatedCart.push({
-        id: item.id,
-        name: item.name,
-        price: item.price,
+        id: product.id,
+        name: product.name,
+        price: product.price,
         quantity: 1,
       });
     }
@@ -133,13 +133,13 @@ export const useAppStore = create<CartStore>((set, get) => ({
       .map((x) => x.price * x.quantity)
       .reduce((result, current) => result + current, 0);
 
-    inventoryStore.getFromInventory(item);
+    inventoryStore.getFromInventory(product);
 
     set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
   },
-  removeFromCart: (item: Item) => {
+  removeFromCart: (product: Product) => {
     const cart = get().cart;
-    const cartItem = cart.find((x) => x.id === item.id);
+    const cartItem = cart.find((x) => x.id === product.id);
 
     if (!cartItem) {
       return;
@@ -147,25 +147,25 @@ export const useAppStore = create<CartStore>((set, get) => ({
 
     const inventoryStore = useInventoryStore.getState();
 
-    let updatedCart: Item[] = [];
+    let updatedCart: Product[] = [];
 
     if (cartItem.quantity > 1) {
       updatedCart = cart.map((x) => {
-        if (x.id === item.id) {
+        if (x.id === product.id) {
           return { ...x, quantity: x.quantity - 1 };
         }
 
         return x;
       });
     } else {
-      updatedCart = cart.filter((x) => x.id !== item.id);
+      updatedCart = cart.filter((x) => x.id !== product.id);
     }
 
     const totalPrice = updatedCart
       .map((x) => x.price * x.quantity)
       .reduce((result, current) => result + current, 0);
 
-    inventoryStore.returnToInventory(item);
+    inventoryStore.returnToInventory(product);
 
     set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
   },
