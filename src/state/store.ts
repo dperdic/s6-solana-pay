@@ -124,7 +124,7 @@ export const useAppStore = create<CartStore>((set, get) => ({
     }
 
     const totalPrice = updatedCart
-      .map((x) => x.price)
+      .map((x) => x.price * x.quantity)
       .reduce((result, current) => result + current, 0);
 
     inventoryStore.getFromInventory(item);
@@ -156,7 +156,7 @@ export const useAppStore = create<CartStore>((set, get) => ({
     }
 
     const totalPrice = updatedCart
-      .map((x) => x.price)
+      .map((x) => x.price * x.quantity)
       .reduce((result, current) => result + current, 0);
 
     inventoryStore.returnToInventory(item);
