@@ -25,7 +25,7 @@ export default function Template({ children }: { children: ReactNode }) {
         }}`}
       >
         {publicKey ? (
-          <>{children}</>
+          <div className="max-w-3xl w-full mx-auto">{children}</div>
         ) : (
           <div className="max-w-2xl w-full mx-auto">
             <div className="p-8 bg-white rounded-md shadow w-full text-center">
