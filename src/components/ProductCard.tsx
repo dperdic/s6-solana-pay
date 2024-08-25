@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: Product }) {
   );
 
   return (
-    <div className="w-full flex flex-col border rounded-md gap-4 p-4 shadow-sm">
+    <div className="w-full flex flex-col border rounded-md gap-4 p-4 shadow">
       <div>
         <span className="font-semibold">Name:</span>
         &nbsp;
