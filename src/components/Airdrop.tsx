@@ -83,7 +83,7 @@ export default function Airdrop() {
 
   return (
     <div className="w-full">
-      <h3 className="text-xl font-semibold pb-4">Airdrop</h3>
+      <h3 className="text-xl font-semibold mb-4">Airdrop</h3>
 
       <div className="grid gap-4 p-4 bg-white rounded-md shadow w-full">
         <div>Balance: {balance} SOL</div>
