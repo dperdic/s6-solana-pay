@@ -36,7 +36,7 @@ interface InventoryStore {
   inventory: Product[];
 
   returnToInventory: (product: Product) => void;
-  getFromInventory: (product: Product) => void;
+  removeFromInventory: (product: Product) => void;
 }
 
 interface CartStore {
@@ -57,7 +57,7 @@ interface TransactionState {
 export const useInventoryStore = create<InventoryStore>((set, get) => ({
   inventory: INITIAL_STATE.inventory,
 
-  getFromInventory: (product: Product) => {
+  removeFromInventory: (product: Product) => {
     const inventory = get().inventory;
     const inventoryProduct = inventory.find((x) => x.id === product.id)!;
 
@@ -133,7 +133,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       .map((x) => x.price * x.quantity)
       .reduce((result, current) => result + current, 0);
 
-    inventoryStore.getFromInventory(product);
+    inventoryStore.removeFromInventory(product);
 
     set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
   },
