@@ -47,6 +47,12 @@ export interface CartStore {
   removeFromCart: (item: Item) => void;
 }
 
+export interface TransactionState {
+  transactionInProgress: boolean;
+
+  setTransactionInProgress: (inProgress: boolean) => void;
+}
+
 // using inventory store here in place of a database or program to manage the inventory
 export const useInventoryStore = create<InventoryStore>((set, get) => ({
   inventory: INITIAL_STATE.inventory,
@@ -170,4 +176,11 @@ export const useAppStore = create<CartStore>((set, get) => ({
       totalPrice: INITIAL_STATE.totalPrice,
     }));
   },
+}));
+
+export const useTransactionStateStore = create<TransactionState>((set) => ({
+  transactionInProgress: false,
+
+  setTransactionInProgress: (inProgress) =>
+    set(() => ({ transactionInProgress: inProgress })),
 }));
