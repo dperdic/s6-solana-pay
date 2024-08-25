@@ -88,7 +88,7 @@ export default function Airdrop() {
       <div className="grid gap-4 p-4 bg-white rounded-md shadow w-full">
         <div>Balance: {balance} SOL</div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-4">
           <input
             type="number"
             placeholder="Amount"
