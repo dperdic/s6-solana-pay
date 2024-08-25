@@ -1,4 +1,5 @@
 import Airdrop from "@/components/Airdrop";
+import Cart from "@/components/Cart";
 import Inventory from "@/components/Inventory";
 
 export default function Home() {
@@ -6,7 +7,7 @@ export default function Home() {
     <div className="flex flex-col gap-12">
       <Airdrop />
       <Inventory />
-      {/* <Cart /> */}
+      <Cart />
     </div>
   );
 }
