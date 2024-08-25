@@ -13,9 +13,7 @@ export default function CartItem({ product }: { product: Product }) {
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-3 sm:flex-row gap-4 p-4 justify-between">
       <div className="col-span-1 text-center sm:text-left">
-        <span className="font-semibold">Name:</span>
-        &nbsp;
-        <span>{product.name}</span>
+        <span className="font-semibold">{product.name}</span>
       </div>
 
       <div className="col-span-1 flex gap-2 justify-center">
@@ -54,7 +52,7 @@ export default function CartItem({ product }: { product: Product }) {
 
       <div className="col-span-1 text-center sm:text-right">
         <span className="font-semibold">
-          {product.quantity * product.price} SOL
+          {(product.quantity * product.price).toFixed(9)} SOL
         </span>
       </div>
     </div>
