@@ -129,7 +129,7 @@ export const useAppStore = create<CartStore>((set, get) => ({
 
     inventoryStore.getFromInventory(item);
 
-    set((state) => ({ cart: updatedCart, totalPrice: totalPrice }));
+    set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
   },
   removeFromCart: (item: Item) => {
     const cart = get().cart;
@@ -161,6 +161,13 @@ export const useAppStore = create<CartStore>((set, get) => ({
 
     inventoryStore.returnToInventory(item);
 
-    set((state) => ({ cart: updatedCart, totalPrice: totalPrice }));
+    set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
+  },
+
+  clearCart: () => {
+    set(() => ({
+      cart: INITIAL_STATE.cart,
+      totalPrice: INITIAL_STATE.totalPrice,
+    }));
   },
 }));
