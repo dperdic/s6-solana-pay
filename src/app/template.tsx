@@ -25,9 +25,9 @@ export default function Template({ children }: { children: ReactNode }) {
         }}`}
       >
         {publicKey ? (
-          <div className="flex flex-col gap-12">{children}</div>
+          <>{children}</>
         ) : (
-          <div className="w-full max-w-2xl mx-auto">
+          <div className="max-w-2xl w-full mx-auto">
             <div className="p-8 bg-white rounded-md shadow w-full text-center">
               <h3 className="text-xl font-semibold">
                 Connect a wallet to continue
