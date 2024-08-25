@@ -11,11 +11,9 @@ export default function Inventory() {
       <h3 className="text-xl font-semibold mb-4">Inventory</h3>
 
       <div className="flex flex-col sm:flex-row gap-4 p-4 bg-white rounded-md shadow w-full">
-        <>
-          {inventory.map((product) => (
-            <ProductCard key={product.id} product={product}></ProductCard>
-          ))}
-        </>
+        {inventory.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
