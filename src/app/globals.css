@@ -15,6 +15,10 @@ body {
   @apply items-center border border-transparent font-medium whitespace-nowrap focus:outline-none disabled:opacity-75;
 }
 
+.btn-xs {
+  @apply px-2 py-1.5 text-sm rounded-lg;
+}
+
 .btn-sm {
   @apply p-3 text-sm rounded-md;
 }
@@ -24,7 +28,7 @@ body {
 }
 
 .btn-black {
-  @apply border border-transparent shadow-sm text-white bg-black hover:bg-gray-800 focus:ring-gray-500;
+  @apply border border-transparent shadow text-white bg-black hover:bg-gray-800 focus:ring-gray-500;
 }
 
 .btn-white {
