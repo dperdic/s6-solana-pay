@@ -12,19 +12,19 @@ const INITIAL_STATE = {
     {
       id: 1,
       name: "product 1",
-      price: 1,
+      price: 0.0005,
       quantity: 10,
     },
     {
       id: 2,
       name: "product 2",
-      price: 1.5,
+      price: 0.0002,
       quantity: 15,
     },
     {
       id: 3,
       name: "product 3",
-      price: 2,
+      price: 0.0003,
       quantity: 7,
     },
   ],
@@ -121,6 +121,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
         return x;
       });
     } else {
+      updatedCart = [...cart];
+
       updatedCart.push({
         id: product.id,
         name: product.name,
