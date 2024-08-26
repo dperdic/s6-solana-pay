@@ -137,7 +137,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
     inventoryStore.removeFromInventory(product);
 
-    set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
+    set(() => ({
+      cart: updatedCart,
+      totalPrice: Number(totalPrice.toFixed(9)),
+    }));
   },
   removeFromCart: (product: Product) => {
     const cart = get().cart;
@@ -169,7 +172,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
     inventoryStore.returnToInventory(product);
 
-    set(() => ({ cart: updatedCart, totalPrice: totalPrice }));
+    set(() => ({
+      cart: updatedCart,
+      totalPrice: Number(totalPrice.toFixed(9)),
+    }));
   },
 
   clearCart: () => {
