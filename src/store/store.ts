@@ -53,6 +53,20 @@ interface TransactionState {
   setTransactionInProgress: (inProgress: boolean) => void;
 }
 
+interface QrCodeState {
+  isQrCodeVisible: boolean;
+  url: string | undefined;
+
+  setIsQrCodeVisible: (visible: boolean) => void;
+  setUrl: (url: string) => void;
+}
+
+interface PaymentState {
+  reference: string | undefined;
+
+  setReference: (reference: string | undefined) => void;
+}
+
 // using inventory store here in place of a database or program to manage the inventory
 export const useInventoryStore = create<InventoryStore>((set, get) => ({
   inventory: INITIAL_STATE.inventory,
@@ -191,4 +205,20 @@ export const useTransactionStateStore = create<TransactionState>((set) => ({
 
   setTransactionInProgress: (inProgress) =>
     set(() => ({ transactionInProgress: inProgress })),
+}));
+
+export const useQrCodeStateStore = create<QrCodeState>((set) => ({
+  isQrCodeVisible: false,
+  url: undefined,
+
+  setIsQrCodeVisible: (visible) =>
+    set((state) => ({ ...state, isQrCodeVisible: visible })),
+  setUrl: (url) => set((state) => ({ ...state, url: url })),
+}));
+
+export const usePaymentStateStore = create<PaymentState>((set) => ({
+  reference: undefined,
+
+  setReference: (reference) =>
+    set((state) => ({ ...state, reference: reference })),
 }));

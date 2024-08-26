@@ -1,17 +1,46 @@
 "use client";
 
-import { useCartStore, useTransactionStateStore } from "@/store/store";
+import { generatePaymentUrl } from "@/backend/payment";
+import {
+  useCartStore,
+  usePaymentStateStore,
+  useQrCodeStateStore,
+  useTransactionStateStore,
+} from "@/store/store";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const cart = useCartStore((state) => state.cart);
   const totalPrice = useCartStore((state) => state.totalPrice);
+  const transactionInProgress = useTransactionStateStore(
+    (state) => state.transactionInProgress
+  );
 
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
 
-  const transactionInProgress = useTransactionStateStore(
-    (state) => state.transactionInProgress
+  const setReference = usePaymentStateStore((state) => state.setReference);
+  const setUrl = useQrCodeStateStore((state) => state.setUrl);
+
+  const setsetIsQrCodeVisible = useQrCodeStateStore(
+    (state) => state.setIsQrCodeVisible
   );
+
+  const handleBuy = async () => {
+    const message = cart
+      .map((product) => `${product.name} x ${product.quantity}`)
+      .join(", ");
+
+    const res = await generatePaymentUrl(totalPrice, message);
+
+    if (res) {
+      setReference(res.reference);
+      setUrl(res.url);
+      setsetIsQrCodeVisible(true);
+    } else {
+      toast.error("An error occured during checkout");
+    }
+  };
 
   return (
     <div className="full">
@@ -25,9 +54,11 @@ export default function Cart() {
                 <th className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-left w-5/12">
                   Product
                 </th>
+
                 <th className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-center w-2/12">
                   Quantity
                 </th>
+
                 <th className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-right w-5/12">
                   Price
                 </th>
@@ -48,9 +79,7 @@ export default function Cart() {
                         <button
                           type="button"
                           className="btn btn-xs btn-white"
-                          disabled={
-                            transactionInProgress || product.quantity <= 0
-                          }
+                          disabled={transactionInProgress}
                           onClick={() => removeFromCart(product)}
                         >
                           <svg
@@ -66,9 +95,7 @@ export default function Cart() {
                         <button
                           type="button"
                           className="btn btn-xs btn-white"
-                          disabled={
-                            transactionInProgress || product.quantity <= 0
-                          }
+                          disabled={transactionInProgress}
                           onClick={() => addToCart(product)}
                         >
                           <svg
@@ -111,7 +138,7 @@ export default function Cart() {
                       type="button"
                       className="btn btn-md btn-black"
                       disabled={transactionInProgress || !cart.length}
-                      onClick={() => {}}
+                      onClick={handleBuy}
                     >
                       Buy
                     </button>
@@ -120,7 +147,7 @@ export default function Cart() {
               </>
             ) : (
               <tr>
-                <td colSpan={9999} className="text-center">
+                <td colSpan={9999} className="text-center py-2">
                   The cart is empty
                 </td>
               </tr>

@@ -3,6 +3,8 @@ declare global {
     interface ProcessEnv {
       NEXT_PUBLIC_RPC_URL: string;
       NEXT_PUBLIC_SOL_CLUSTER: string;
+      NEXT_RPC_URL: string;
+      NEXT_SOL_CLUSTER: string;
     }
   }
 }

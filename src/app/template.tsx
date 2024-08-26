@@ -9,7 +9,7 @@ export default function Template({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <header className="fixed top-0 z-50 flex h-18 w-full bg-white shadow-sm">
+      <header className="fixed top-0 z-30 flex h-18 w-full bg-white shadow-sm">
         <nav className="flex h-full w-full sm:px-16 px-8 gap-4 items-center justify-between">
           <span className="flex flex-shrink h-5 relative">
             <img src="/next.svg" alt="NextJS" />
