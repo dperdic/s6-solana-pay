@@ -10,6 +10,10 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="w-full flex flex-col border rounded-md gap-4 p-4 shadow">
+      <div className="mt-auto mx-auto">
+        <img className="max-h-52" src={product.imageUrl} alt={product.name} />
+      </div>
+
       <div>
         <span className="font-semibold">Name:</span>
         &nbsp;

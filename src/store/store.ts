@@ -5,27 +5,31 @@ export type Product = {
   name: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 };
 
 const INITIAL_STATE = {
   inventory: <Product[]>[
     {
       id: 1,
-      name: "product 1",
+      name: "Coffee",
       price: 0.0005,
       quantity: 10,
+      imageUrl: "/images/coffee.png",
     },
     {
       id: 2,
-      name: "product 2",
+      name: "Tea",
       price: 0.0002,
       quantity: 15,
+      imageUrl: "/images/tea.png",
     },
     {
       id: 3,
-      name: "product 3",
+      name: "Soda",
       price: 0.0003,
       quantity: 7,
+      imageUrl: "/images/soda.png",
     },
   ],
   cart: <Product[]>[],
@@ -143,6 +147,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
         name: product.name,
         price: product.price,
         quantity: 1,
+        imageUrl: product.imageUrl,
       });
     }
 
