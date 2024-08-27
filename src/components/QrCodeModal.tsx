@@ -7,29 +7,41 @@ import {
   useQrCodeStateStore,
 } from "@/store/store";
 import { createQR } from "@solana/pay";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function QrCodeModal() {
   const url = useQrCodeStateStore((state) => state.url);
   const reference = usePaymentStateStore((state) => state.reference);
   const totalPrice = useCartStore((state) => state.totalPrice);
-  const [isValidating, setIsValidating] = useState(true);
   const qrRef = useRef<HTMLDivElement>(null);
+  const [timeLeft, setTimeLeft] = useState(30);
 
   const setIsQrCodeVisible = useQrCodeStateStore(
     (state) => state.setIsQrCodeVisible
   );
+  const clearCart = useCartStore((state) => state.clearCart);
 
-  const handleClose = () => {
-    setIsQrCodeVisible(false);
-  };
+  const handleClose = useCallback(
+    (isSuccess: boolean, canceled: boolean) => {
+      setIsQrCodeVisible(false);
+
+      if (isSuccess) {
+        toast.success("Payment successful");
+        clearCart();
+        return;
+      }
+
+      if (!canceled) {
+        toast.error("Payment time expired");
+      }
+    },
+    [setIsQrCodeVisible, clearCart]
+  );
 
   useEffect(() => {
     if (url && qrRef.current) {
       const qr = createQR(url, 400, "white", "black");
-
-      console.log(qr);
 
       qrRef.current.innerHTML = "";
 
@@ -42,7 +54,7 @@ export default function QrCodeModal() {
       const interval = setInterval(() => {
         checkTransaction(reference, totalPrice).then((res) => {
           if (res) {
-            toast.success("Payment sucessful");
+            handleClose(true, false);
           }
         });
       }, 5000);
@@ -51,19 +63,26 @@ export default function QrCodeModal() {
         clearInterval(interval);
       };
     }
-  }, [reference, totalPrice]);
+  }, [totalPrice, reference, handleClose]);
 
-  <div className="max-w-2xl w-full mx-auto">
-    <div className="p-8 bg-white rounded-md shadow w-full text-center">
-      <h3 className="text-xl font-semibold">Connect a wallet to continue</h3>
-    </div>
-  </div>;
+  useEffect(() => {
+    if (timeLeft === -10) {
+      handleClose(false, false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setTimeLeft((currentTimeLeft) => currentTimeLeft - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
 
   return (
     <div className="absolute inset-0 z-40 bg-black bg-opacity-40 h-full w-full flex items-center justify-center">
       <div className="max-w-2xl w-full mx-auto z-50 bg-white rounded-lg shadow-md">
         <div className="relative p-4 w-full max-w-2xl max-h-full">
-          <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+          <div className="flex items-center justify-between p-4 border-b rounded-t">
             <h3 className="text-xl font-semibold text-gray-900">
               Scan the QR code to pay
             </h3>
@@ -71,7 +90,9 @@ export default function QrCodeModal() {
             <button
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-              onClick={handleClose}
+              onClick={() => {
+                handleClose(false, true);
+              }}
             >
               <svg
                 className="w-3 h-3"
@@ -88,13 +109,19 @@ export default function QrCodeModal() {
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
-              <span className="sr-only">Close modal</span>
             </button>
           </div>
 
-          <div ref={qrRef} className="flex justify-center"></div>
-
-          <div>Validating transaction...</div>
+          <div className="flex flex-col justify-center p-4 gap-4">
+            <div ref={qrRef} className="flex justify-center"></div>
+            <div className="text-center">
+              {timeLeft > 0 ? (
+                <>Time remaining: {timeLeft} seconds</>
+              ) : (
+                <>Validating transaction...</>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
