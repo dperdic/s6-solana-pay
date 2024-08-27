@@ -12,7 +12,6 @@ import {
   Connection,
   clusterApiUrl,
   Cluster,
-  TransactionResponse,
 } from "@solana/web3.js";
 import BigNumber from "bignumber.js";
 
@@ -52,11 +51,11 @@ export const generatePaymentUrl = async (
       memo: memo,
     });
 
-    console.log("encoded url:", url);
+    console.log("payment url: ", url);
 
     return { reference: reference.toBase58(), url: url.toString() };
   } catch (error) {
-    console.error("Error:", error);
+    console.error("error: ", error);
 
     return null;
   }
@@ -65,7 +64,7 @@ export const generatePaymentUrl = async (
 export const checkTransaction = async (
   reference: string,
   amount: number
-): Promise<TransactionResponse | null> => {
+): Promise<boolean> => {
   try {
     const referencePublicKey = new PublicKey(reference);
 
@@ -81,16 +80,16 @@ export const checkTransaction = async (
       }
     );
 
-    console.log("Transfer validation response: ", transferValidationResponse);
+    console.log("transfer validation response: ", transferValidationResponse);
 
-    return transferValidationResponse;
+    return true;
   } catch (error) {
     if (error instanceof FindReferenceError) {
       console.log(reference.toString(), "not confirmed");
     } else {
-      console.error("Unknown error: ", error);
+      console.error("unknown error: ", error);
     }
 
-    return null;
+    return false;
   }
 };
