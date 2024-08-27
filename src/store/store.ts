@@ -45,6 +45,7 @@ interface CartStore {
 
   addToCart: (product: Product) => void;
   removeFromCart: (product: Product) => void;
+  clearCart: () => void;
 }
 
 interface TransactionState {
