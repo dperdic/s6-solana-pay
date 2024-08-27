@@ -1,6 +1,6 @@
 # S6 - Solana Pay
 
-Sixth assignment for the Solana SUmmer Fellowship 2024.
+Sixth assignment for the Solana Summer Fellowship 2024.
 
 ## Description
 
@@ -18,6 +18,8 @@ The app simulates a POS machine where the user adds the items to the cart and wh
 
 The user then has 30 seconds to scan the QR code and pay.
 
-The transaction is checked every 5 seconds for verification. After it has been verified, a notification will be displayed that the payment is successful.
+The transaction is checked every 5 seconds for verification.
+
+After it has been verified, a notification will be displayed that the payment is successful.
 
 If the transaction is not verified within the time limit a notification will be displayed that the transaction was not successful.
