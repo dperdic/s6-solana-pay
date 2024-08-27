@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# S6 - Solana Pay
 
-## Getting Started
+Sixth assignment for the Solana SUmmer Fellowship 2024.
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Assignment
+
+```
+Build a Point-Of-Sale Web UI for adding products and checking out with Solana Pay.
+
+The payment confirmation should be displayed after checkout.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The app simulates a POS machine where the user adds the items to the cart and when the `Buy` button is pressed, the order is created and a QR code for Solana Pay is displayed.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The user then has 30 seconds to scan the QR code and pay.
 
-## Learn More
+The transaction is checked every 5 seconds for verification. After it has been verified, a notification will be displayed that the payment is successful.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If the transaction is not verified within the time limit a notification will be displayed that the transaction was not successful.
