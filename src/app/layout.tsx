@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Slide, ToastContainer } from "react-toastify";
-import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-
-const WalletContextProviderDynamic = dynamic(
-  async () => await import("@/providers/WalletContextProvider"),
-  { ssr: false }
-);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <WalletContextProviderDynamic>{children}</WalletContextProviderDynamic>
+        {children}
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
