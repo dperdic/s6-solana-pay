@@ -43,7 +43,7 @@ export default function Cart() {
   };
 
   return (
-    <div className="full">
+    <div className="h-full w-full">
       <h3 className="text-xl font-semibold mb-4">Cart</h3>
 
       <div className="flex flex-col p-4 bg-white rounded-md shadow w-full overflow-hidden overflow-x-auto">
